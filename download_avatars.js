@@ -3,6 +3,15 @@ var tokens = require('./secrets.js');
 var fs = require('fs');
 var path = require('path');
 
+var args = process.argv.splice(2, 2);
+
+if (args.length < 2) {
+  console.log('Error');
+  process.exit();
+}
+
+console.log(args);
+
 console.log('Welcome to the GitHub Avatar Downloader!');
 
 function getRepoContributors(repoOwner, repoName, cb) {
@@ -35,7 +44,7 @@ function downloadImageByURL(url, filePath) {
          .pipe(fs.createWriteStream(filePath));
 }
 
-getRepoContributors("jquery", "jquery", function(err, contributors) {
+getRepoContributors(process.argv[2], process.argv[3], function(err, contributors) {
   console.log("Errors:", err);
   for(var i = 0; i < contributors.length; i++){
     var contributor = contributors[i]
